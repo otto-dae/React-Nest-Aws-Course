@@ -12,6 +12,6 @@ export class AppController {
 
   @Get('/equipo')
   getEquipo(): string {
-      return this.appService.getEquipo();
-    }
+    return this.appService.getEquipo();
   }
+}
