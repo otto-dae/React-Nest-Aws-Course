@@ -8,16 +8,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const employees_module_1 = require("./employees/employees.module");
 const products_module_1 = require("./products/products.module");
+const config_1 = require("@nestjs/config");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [employees_module_1.EmployeesModule, products_module_1.ProductsModule],
+        imports: [
+            config_1.ConfigModule.forRoot(),
+            typeorm_1.TypeOrmModule.forRoot(({
+                type: 'postgres',
+                host: process.env.host,
+                port: +process.env.port,
+                username: 'postgres',
+                password: "TheBestPassword",
+                database: process.env.name,
+                entities: [],
+                autoLoadEntities: true,
+                synchronize: true,
+            })), employees_module_1.EmployeesModule, products_module_1.ProductsModule
+        ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })
