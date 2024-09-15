@@ -5,12 +5,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductsService = void 0;
 const common_1 = require("@nestjs/common");
 const uuid_1 = require("uuid");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const product_entity_1 = require("./entities/product.entity");
 let ProductsService = class ProductsService {
-    constructor() {
+    constructor(productRepository) {
+        this.productRepository = productRepository;
         this.products = [
             {
                 productId: (0, uuid_1.v4)(),
@@ -36,20 +46,17 @@ let ProductsService = class ProductsService {
         ];
     }
     create(createProductDto) {
-        if (!createProductDto.productId)
-            createProductDto.productId = (0, uuid_1.v4)();
-        createProductDto.productId = (0, uuid_1.v4)();
-        this.products.push(createProductDto);
-        return createProductDto;
+        const product = this.productRepository.save(createProductDto);
+        return product;
     }
     findAll() {
-        return this.products;
+        return this.productRepository.find();
     }
     findOne(id) {
-        const productFound = this.products.filter((product) => product.productId === id)[0];
-        if (!productFound)
-            throw new common_1.NotFoundException();
-        return productFound;
+        const product = this.productRepository.findOneBy({
+            productId: id,
+        });
+        return product;
     }
     findByProvider(id) {
         const productsFound = this.products.filter((product) => product.provider === id);
@@ -57,30 +64,30 @@ let ProductsService = class ProductsService {
             throw new common_1.NotFoundException();
         return productsFound;
     }
-    update(id, updateProductDto) {
-        let product = this.findOne(id);
-        this.products.map((product) => {
-            if (product.productId == id)
-                return {
-                    ...product,
-                    ...updateProductDto
-                };
-            return product;
-        });
-        product = {
-            ...product,
+    async update(id, updateProductDto) {
+        const producToUpdate = await this.productRepository.preload({
+            productId: id,
             ...updateProductDto
-        };
-        return product;
+        });
+        if (!producToUpdate)
+            throw new common_1.NotFoundException();
+        this.productRepository.save(producToUpdate);
+        return producToUpdate;
     }
-    remove(id) {
-        const { productId } = this.findOne(id);
-        this.products = this.products.filter((product) => product.productId !== productId);
-        return this.products;
+    async remove(id) {
+        this.findOne(id);
+        this.productRepository.delete({
+            productId: id,
+        });
+        return {
+            message: `objeto con ${id} eliminado`
+        };
     }
 };
 exports.ProductsService = ProductsService;
 exports.ProductsService = ProductsService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __param(0, (0, typeorm_1.InjectRepository)(product_entity_1.Product)),
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], ProductsService);
 //# sourceMappingURL=products.service.js.map
