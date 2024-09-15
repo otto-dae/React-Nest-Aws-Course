@@ -46,13 +46,13 @@ let ProductsService = class ProductsService {
     findOne(id) {
         const productFound = this.products.filter((product) => product.productId === id)[0];
         if (!productFound)
-            throw new common_1.NotFoundException;
+            throw new common_1.NotFoundException();
         return productFound;
     }
     findByProvider(id) {
         const productsFound = this.products.filter((product) => product.provider === id);
-        if (!productsFound)
-            throw new common_1.NotFoundException;
+        if (productsFound.length == 0)
+            throw new common_1.NotFoundException();
         return productsFound;
     }
     update(id, updateProductDto) {
