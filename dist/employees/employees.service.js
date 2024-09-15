@@ -34,6 +34,8 @@ let EmployeesService = class EmployeesService {
     }
     findOne(id) {
         const employee = this.employees.filter((employee) => employee.id === id)[0];
+        if (!employee)
+            throw new common_1.NotFoundException();
         return employee;
     }
     update(id, updateEmployeeDto) {
@@ -46,11 +48,14 @@ let EmployeesService = class EmployeesService {
             if (employee.id === id) {
                 employee = employeeToUpdate;
             }
+            if (!employeeToUpdate)
+                throw new common_1.NotFoundException();
             return employee;
         });
         return employeeToUpdate;
     }
     remove(id) {
+        const employeeFound = this.findOne(id);
         this.employees = this.employees.filter((employee) => employee.id != id);
         return this.employees;
     }

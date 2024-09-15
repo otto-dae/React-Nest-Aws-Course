@@ -12,69 +12,79 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EmployeesController = void 0;
+exports.ProductsController = void 0;
 const common_1 = require("@nestjs/common");
-const employees_service_1 = require("./employees.service");
-const create_employee_dto_1 = require("./dto/create-employee.dto");
-const update_employee_dto_1 = require("./dto/update-employee.dto");
-let EmployeesController = class EmployeesController {
-    constructor(employeesService) {
-        this.employeesService = employeesService;
+const products_service_1 = require("./products.service");
+const create_product_dto_1 = require("./dto/create-product.dto");
+const update_product_dto_1 = require("./dto/update-product.dto");
+let ProductsController = class ProductsController {
+    constructor(productsService) {
+        this.productsService = productsService;
     }
-    create(createEmployeeDto) {
-        return this.employeesService.create(createEmployeeDto);
+    create(createProductDto) {
+        return this.productsService.create(createProductDto);
     }
     findAll() {
-        return this.employeesService.findAll();
+        return this.productsService.findAll();
     }
     findOne(id) {
-        return this.employeesService.findOne(id);
+        return this.productsService.findOne(id);
     }
-    update(id, updateEmployeeDto) {
-        return this.employeesService.update(id, updateEmployeeDto);
+    findByProvider(id) {
+        return this.productsService.findByProvider(id);
+    }
+    update(id, updateProductDto) {
+        return this.productsService.update(id, updateProductDto);
     }
     remove(id) {
-        return this.employeesService.remove(id);
+        return this.productsService.remove(id);
     }
 };
-exports.EmployeesController = EmployeesController;
+exports.ProductsController = ProductsController;
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_employee_dto_1.CreateEmployeeDto]),
+    __metadata("design:paramtypes", [create_product_dto_1.CreateProductDto]),
     __metadata("design:returntype", void 0)
-], EmployeesController.prototype, "create", null);
+], ProductsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], EmployeesController.prototype, "findAll", null);
+], ProductsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe({ version: "4" }))),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], EmployeesController.prototype, "findOne", null);
+], ProductsController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Get)('provider/:id'),
+    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe({ version: "4" }))),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ProductsController.prototype, "findByProvider", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe({ version: "4" }))),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_employee_dto_1.UpdateEmployeeDto]),
+    __metadata("design:paramtypes", [String, update_product_dto_1.UpdateProductDto]),
     __metadata("design:returntype", void 0)
-], EmployeesController.prototype, "update", null);
+], ProductsController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe({ version: "4" }))),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], EmployeesController.prototype, "remove", null);
-exports.EmployeesController = EmployeesController = __decorate([
-    (0, common_1.Controller)('employees'),
-    __metadata("design:paramtypes", [employees_service_1.EmployeesService])
-], EmployeesController);
-//# sourceMappingURL=employees.controller.js.map
+], ProductsController.prototype, "remove", null);
+exports.ProductsController = ProductsController = __decorate([
+    (0, common_1.Controller)('products'),
+    __metadata("design:paramtypes", [products_service_1.ProductsService])
+], ProductsController);
+//# sourceMappingURL=products.controller.js.map

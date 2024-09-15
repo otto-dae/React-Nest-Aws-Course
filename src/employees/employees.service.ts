@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { v4 as uuidv4 } from 'uuid';
@@ -31,6 +31,7 @@ export class EmployeesService {
 
   findOne(id: string) {
    const employee = this.employees.filter((employee)=>employee.id === id)[0];
+   if(!employee) throw new NotFoundException();
    return employee;
   }
 
@@ -44,12 +45,14 @@ export class EmployeesService {
       if(employee.id === id){
         employee = employeeToUpdate;
       }
+      if(!employeeToUpdate) throw new NotFoundException();
       return employee
     })
     return employeeToUpdate;
   }
 
   remove(id: string) {
+    const employeeFound = this.findOne(id);
     this.employees = this.employees.filter((employee)=>employee.id != id);
     return this.employees;
   }
