@@ -36,6 +36,8 @@ let ProductsService = class ProductsService {
         ];
     }
     create(createProductDto) {
+        if (!createProductDto.productId)
+            createProductDto.productId = (0, uuid_1.v4)();
         createProductDto.productId = (0, uuid_1.v4)();
         this.products.push(createProductDto);
         return createProductDto;
@@ -57,6 +59,14 @@ let ProductsService = class ProductsService {
     }
     update(id, updateProductDto) {
         let product = this.findOne(id);
+        this.products.map((product) => {
+            if (product.productId == id)
+                return {
+                    ...product,
+                    ...updateProductDto
+                };
+            return product;
+        });
         product = {
             ...product,
             ...updateProductDto
