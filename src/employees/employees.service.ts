@@ -31,25 +31,19 @@ constructor(
    return employee;
   }
 
-  update(id: string, updateEmployeeDto: UpdateEmployeeDto) {
-    let employeeToUpdate = this.findOne(id);
-    employeeToUpdate ={
-      ...employeeToUpdate,
-      ...updateEmployeeDto,
-    }
-    this.employees = this.employees.map((employee)=> {
-      if(employee.id === id){
-        employee = employeeToUpdate;
-      }
-      if(!employeeToUpdate) throw new NotFoundException();
-      return employee
-    })
-    return employeeToUpdate;
+  async update(id: string, updateEmployeeDto: UpdateEmployeeDto) {
+    const employeeToUpdate = await this.employeeRepository.preload({
+      employeeId: id,
+      ... updateEmployeeDto
+  })
+  this.employeeRepository.save(employeeToUpdate)
+  return employeeToUpdate;
   }
-
   remove(id: string) {
-    const employeeFound = this.findOne(id);
-    this.employees = this.employees.filter((employee)=>employee.id != id);
-    return this.employees;
+    this.employeeRepository.delete({
+      employeeId: id
+    })
+    return {
+      message: `Employee delted with the id: ${id}`};
   }
 }

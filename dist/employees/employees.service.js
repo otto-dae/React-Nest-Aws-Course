@@ -34,26 +34,21 @@ let EmployeesService = class EmployeesService {
         });
         return employee;
     }
-    update(id, updateEmployeeDto) {
-        let employeeToUpdate = this.findOne(id);
-        employeeToUpdate = {
-            ...employeeToUpdate,
-            ...updateEmployeeDto,
-        };
-        this.employees = this.employees.map((employee) => {
-            if (employee.id === id) {
-                employee = employeeToUpdate;
-            }
-            if (!employeeToUpdate)
-                throw new common_1.NotFoundException();
-            return employee;
+    async update(id, updateEmployeeDto) {
+        const employeeToUpdate = await this.employeeRepository.preload({
+            employeeId: id,
+            ...updateEmployeeDto
         });
+        this.employeeRepository.save(employeeToUpdate);
         return employeeToUpdate;
     }
     remove(id) {
-        const employeeFound = this.findOne(id);
-        this.employees = this.employees.filter((employee) => employee.id != id);
-        return this.employees;
+        this.employeeRepository.delete({
+            employeeId: id
+        });
+        return {
+            message: `Employee delted with the id: ${id}`
+        };
     }
 };
 exports.EmployeesService = EmployeesService;

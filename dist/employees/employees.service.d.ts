@@ -9,5 +9,7 @@ export declare class EmployeesService {
     findAll(): Promise<Employee[]>;
     findOne(id: string): Promise<Employee>;
     update(id: string, updateEmployeeDto: UpdateEmployeeDto): Promise<Employee>;
-    remove(id: string): any;
+    remove(id: string): {
+        message: string;
+    };
 }

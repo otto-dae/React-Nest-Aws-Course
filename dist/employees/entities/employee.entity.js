@@ -17,7 +17,7 @@ exports.Employee = Employee;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", String)
-], Employee.prototype, "id", void 0);
+], Employee.prototype, "employeeId", void 0);
 __decorate([
     (0, typeorm_1.Column)("text"),
     __metadata("design:type", String)

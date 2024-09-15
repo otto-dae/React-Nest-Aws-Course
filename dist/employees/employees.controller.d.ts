@@ -8,5 +8,7 @@ export declare class EmployeesController {
     findAll(): Promise<import("./entities/employee.entity").Employee[]>;
     findOne(id: string): Promise<import("./entities/employee.entity").Employee>;
     update(id: string, updateEmployeeDto: UpdateEmployeeDto): Promise<import("./entities/employee.entity").Employee>;
-    remove(id: string): any;
+    remove(id: string): {
+        message: string;
+    };
 }
