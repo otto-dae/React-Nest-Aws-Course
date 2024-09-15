@@ -1,4 +1,4 @@
-import { IsString, MaxLength } from "class-validator";
+import { IsEmail, IsString, MaxLength } from "class-validator";
 
 export class CreateEmployeeDto {
 @IsString()
@@ -10,4 +10,7 @@ lastName: string;
 @IsString()
 @MaxLength(10)
 phoneNumber: string;
+@IsString()
+@IsEmail()
+email: string;
 }
