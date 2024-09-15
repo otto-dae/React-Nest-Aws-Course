@@ -2,24 +2,25 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class EmployeesService {
 
   private employees: CreateEmployeeDto[] = [{
-    id: 1,
+    id: uuidv4(),
     name: "alberto",
     lastName: "costas",
     phoneNumber: "2130948"
   },
 {
-  id: 2,
+  id: uuidv4(),
     name: "jose",
     lastName: "perez",
     phoneNumber: "65787689"
 }]
   create(createEmployeeDto: CreateEmployeeDto) {
-    createEmployeeDto.id = this.employees.length + 1;
+    createEmployeeDto.id = uuidv4();
     this.employees.push(createEmployeeDto);
     return createEmployeeDto
   }
@@ -28,12 +29,12 @@ export class EmployeesService {
     return this.employees;
   }
 
-  findOne(id: number) {
-   const employee = this.employees.filter((employee)=>employee.id === id);
+  findOne(id: string) {
+   const employee = this.employees.filter((employee)=>employee.id === id)[0];
    return employee;
   }
 
-  update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
+  update(id: string, updateEmployeeDto: UpdateEmployeeDto) {
     let employeeToUpdate = this.findOne(id);
     employeeToUpdate ={
       ...employeeToUpdate,
@@ -48,7 +49,7 @@ export class EmployeesService {
     return employeeToUpdate;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     this.employees = this.employees.filter((employee)=>employee.id != id);
     return this.employees;
   }
