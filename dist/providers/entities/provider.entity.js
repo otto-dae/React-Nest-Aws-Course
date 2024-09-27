@@ -9,35 +9,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Product = void 0;
-const provider_entity_1 = require("../../providers/entities/provider.entity");
+exports.Provider = void 0;
+const product_entity_1 = require("../../products/entities/product.entity");
 const typeorm_1 = require("typeorm");
-let Product = class Product {
+let Provider = class Provider {
 };
-exports.Product = Product;
+exports.Provider = Provider;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)("uuid"),
     __metadata("design:type", String)
-], Product.prototype, "productId", void 0);
+], Provider.prototype, "providerId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "text" }),
+    (0, typeorm_1.Column)('text'),
     __metadata("design:type", String)
-], Product.prototype, "productName", void 0);
+], Provider.prototype, "providerName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "float" }),
-    __metadata("design:type", Number)
-], Product.prototype, "price", void 0);
+    (0, typeorm_1.Column)('text'),
+    __metadata("design:type", String)
+], Provider.prototype, "providerEmail", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "int" }),
-    __metadata("design:type", Number)
-], Product.prototype, "countSeal", void 0);
-__decorate([
-    (0, typeorm_1.ManyToOne)(() => provider_entity_1.Provider, (provider) => provider.products, {
-        eager: true,
+    (0, typeorm_1.Column)("text", {
+        nullable: true,
     }),
-    __metadata("design:type", provider_entity_1.Provider)
-], Product.prototype, "provider", void 0);
-exports.Product = Product = __decorate([
+    __metadata("design:type", String)
+], Provider.prototype, "providerPhoneNumber", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => product_entity_1.Product, (photo) => photo.provider),
+    __metadata("design:type", Array)
+], Provider.prototype, "products", void 0);
+exports.Provider = Provider = __decorate([
     (0, typeorm_1.Entity)()
-], Product);
-//# sourceMappingURL=product.entity.js.map
+], Provider);
+//# sourceMappingURL=provider.entity.js.map

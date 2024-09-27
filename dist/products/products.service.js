@@ -14,55 +14,39 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductsService = void 0;
 const common_1 = require("@nestjs/common");
-const uuid_1 = require("uuid");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const product_entity_1 = require("./entities/product.entity");
 let ProductsService = class ProductsService {
     constructor(productRepository) {
         this.productRepository = productRepository;
-        this.products = [
-            {
-                productId: (0, uuid_1.v4)(),
-                productName: "Sabritas",
-                price: 29,
-                countSeal: 3,
-                provider: (0, uuid_1.v4)()
-            },
-            {
-                productId: (0, uuid_1.v4)(),
-                productName: "Coca-Cola",
-                price: 40,
-                countSeal: 2,
-                provider: (0, uuid_1.v4)()
-            },
-            {
-                productId: (0, uuid_1.v4)(),
-                productName: "Agua Ciel",
-                price: 15,
-                countSeal: 2,
-                provider: (0, uuid_1.v4)()
-            }
-        ];
     }
     create(createProductDto) {
         const product = this.productRepository.save(createProductDto);
         return product;
     }
     findAll() {
-        return this.productRepository.find();
+        return this.productRepository.find({
+            loadEagerRelations: true,
+            relations: {
+                provider: true
+            }
+        });
     }
     findOne(id) {
         const product = this.productRepository.findOneBy({
             productId: id,
         });
+        if (!product)
+            throw new common_1.NotFoundException();
         return product;
     }
     findByProvider(id) {
-        const productsFound = this.products.filter((product) => product.provider === id);
-        if (productsFound.length == 0)
-            throw new common_1.NotFoundException();
-        return productsFound;
+        return this.productRepository.findBy({
+            provider: {
+                providerId: id,
+            }
+        });
     }
     async update(id, updateProductDto) {
         const producToUpdate = await this.productRepository.preload({

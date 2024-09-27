@@ -9,36 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateProductDto = void 0;
+exports.CreateProviderDto = void 0;
 const class_validator_1 = require("class-validator");
-const product_entity_1 = require("../entities/product.entity");
-const provider_entity_1 = require("../../providers/entities/provider.entity");
-class CreateProductDto extends product_entity_1.Product {
+const provider_entity_1 = require("../entities/provider.entity");
+class CreateProviderDto extends provider_entity_1.Provider {
 }
-exports.CreateProductDto = CreateProductDto;
+exports.CreateProviderDto = CreateProviderDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsUUID)("4"),
+    (0, class_validator_1.MaxLength)(100),
+    __metadata("design:type", String)
+], CreateProviderDto.prototype, "providerName", void 0);
+__decorate([
+    (0, class_validator_1.IsEmail)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateProviderDto.prototype, "providerEmail", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(15),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], CreateProductDto.prototype, "productId", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MaxLength)(40),
-    __metadata("design:type", String)
-], CreateProductDto.prototype, "productName", void 0);
-__decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], CreateProductDto.prototype, "price", void 0);
-__decorate([
-    (0, class_validator_1.IsInt)(),
-    __metadata("design:type", Number)
-], CreateProductDto.prototype, "countSeal", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsUUID)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", provider_entity_1.Provider)
-], CreateProductDto.prototype, "provider", void 0);
-//# sourceMappingURL=create-product.dto.js.map
+], CreateProviderDto.prototype, "providerPhoneNumber", void 0);
+//# sourceMappingURL=create-provider.dto.js.map

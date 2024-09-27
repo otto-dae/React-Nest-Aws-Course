@@ -14,6 +14,7 @@ const app_service_1 = require("./app.service");
 const employees_module_1 = require("./employees/employees.module");
 const products_module_1 = require("./products/products.module");
 const config_1 = require("@nestjs/config");
+const providers_module_1 = require("./providers/providers.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -31,7 +32,7 @@ exports.AppModule = AppModule = __decorate([
                 entities: [],
                 autoLoadEntities: true,
                 synchronize: true,
-            })), employees_module_1.EmployeesModule, products_module_1.ProductsModule
+            })), employees_module_1.EmployeesModule, products_module_1.ProductsModule, providers_module_1.ProvidersModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
