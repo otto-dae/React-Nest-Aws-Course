@@ -24,8 +24,8 @@ let ProvidersService = class ProvidersService {
     create(createProviderDto) {
         return this.providerRepository.save(createProviderDto);
     }
-    findByName(name) {
-        const provider = this.providerRepository.findBy({
+    async findByName(name) {
+        const provider = await this.providerRepository.findBy({
             providerName: (0, typeorm_2.Like)(`%${name}%`)
         });
         if (!provider)

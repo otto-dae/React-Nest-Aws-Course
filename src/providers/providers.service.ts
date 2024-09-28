@@ -15,8 +15,8 @@ export class ProvidersService {
     return this.providerRepository.save(createProviderDto);
   }
 
-  findByName(name: string){
-    const provider = this.providerRepository.findBy({
+  async findByName(name: string){
+    const provider = await this.providerRepository.findBy({
       providerName: Like(`%${name}%`)
     })
     if(!provider) throw new NotFoundException();

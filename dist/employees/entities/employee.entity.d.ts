@@ -4,4 +4,5 @@ export declare class Employee {
     lastName: string;
     phoneNumber: string;
     email: string;
+    photoUrl: string;
 }

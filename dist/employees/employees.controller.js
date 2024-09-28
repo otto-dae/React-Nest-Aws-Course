@@ -17,12 +17,16 @@ const common_1 = require("@nestjs/common");
 const employees_service_1 = require("./employees.service");
 const create_employee_dto_1 = require("./dto/create-employee.dto");
 const update_employee_dto_1 = require("./dto/update-employee.dto");
+const platform_express_1 = require("@nestjs/platform-express");
 let EmployeesController = class EmployeesController {
     constructor(employeesService) {
         this.employeesService = employeesService;
     }
     create(createEmployeeDto) {
         return this.employeesService.create(createEmployeeDto);
+    }
+    uploadPhoto(file) {
+        return 'ok';
     }
     findAll() {
         return this.employeesService.findAll();
@@ -45,6 +49,14 @@ __decorate([
     __metadata("design:paramtypes", [create_employee_dto_1.CreateEmployeeDto]),
     __metadata("design:returntype", void 0)
 ], EmployeesController.prototype, "create", null);
+__decorate([
+    (0, common_1.Post)('upload'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
+    __param(0, (0, common_1.UploadedFile)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], EmployeesController.prototype, "uploadPhoto", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),

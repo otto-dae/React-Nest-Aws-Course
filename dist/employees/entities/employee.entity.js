@@ -34,6 +34,13 @@ __decorate([
     (0, typeorm_1.Column)("text"),
     __metadata("design:type", String)
 ], Employee.prototype, "email", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'text',
+        nullable: true
+    }),
+    __metadata("design:type", String)
+], Employee.prototype, "photoUrl", void 0);
 exports.Employee = Employee = __decorate([
     (0, typeorm_1.Entity)()
 ], Employee);
