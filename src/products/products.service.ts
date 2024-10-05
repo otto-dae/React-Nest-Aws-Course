@@ -21,13 +21,7 @@ export class ProductsService {
   }
 
   findAll() {
-    return this.productRepository.find({
-
-      loadEagerRelations: true,
-      relations: {
-        provider: true
-      }
-    });
+    return this.productRepository.find();
   }
 
   findOne(id: string) {

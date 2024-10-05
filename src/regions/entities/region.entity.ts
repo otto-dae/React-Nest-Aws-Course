@@ -2,7 +2,7 @@ import { Location } from "src/locations/entities/location.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Region {
+export class Region{
     @PrimaryGeneratedColumn('increment')
     regionId: number;
     @Column({

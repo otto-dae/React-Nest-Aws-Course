@@ -32,8 +32,9 @@ __decorate([
     __metadata("design:type", Number)
 ], Product.prototype, "countSeal", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => provider_entity_1.Provider, (provider) => provider.products, {
-        eager: true,
+    (0, typeorm_1.ManyToOne)(() => provider_entity_1.Provider, (provider) => provider.products, {}),
+    (0, typeorm_1.JoinColumn)({
+        name: "providerId"
     }),
     __metadata("design:type", provider_entity_1.Provider)
 ], Product.prototype, "provider", void 0);

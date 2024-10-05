@@ -26,12 +26,7 @@ let ProductsService = class ProductsService {
         return product;
     }
     findAll() {
-        return this.productRepository.find({
-            loadEagerRelations: true,
-            relations: {
-                provider: true
-            }
-        });
+        return this.productRepository.find();
     }
     findOne(id) {
         const product = this.productRepository.findOneBy({

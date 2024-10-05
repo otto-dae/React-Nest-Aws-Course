@@ -1,15 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateLocationDto } from './dto/create-location.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
 import { Repository } from 'typeorm';
 import { Location } from './entities/location.entity';
-import { NotFoundError } from 'rxjs';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class LocationsService {
   constructor(
-    private locationRepository: Repository<Location>
-  ){}
+    @InjectRepository(Location)
+    private  locationRepository: Repository<Location>){}
   create(createLocationDto: CreateLocationDto) {
     return this.locationRepository.save(createLocationDto);
   }
@@ -23,14 +23,15 @@ export class LocationsService {
       locationId: id,
     })
     if(!location) throw new NotFoundException("Location not found ");
-
+    return location;
   }
 
-  update(id: number, updateLocationDto: UpdateLocationDto) {
-    const location = this.locationRepository.preload({
+  async update(id: number, updateLocationDto: UpdateLocationDto) {
+    const location = await this.locationRepository.preload({
       locationId: id,
       ... updateLocationDto
     })
+    return location;
   }
 
   remove(id: number) {

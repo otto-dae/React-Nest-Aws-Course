@@ -15,6 +15,10 @@ const employees_module_1 = require("./employees/employees.module");
 const products_module_1 = require("./products/products.module");
 const config_1 = require("@nestjs/config");
 const providers_module_1 = require("./providers/providers.module");
+const managers_module_1 = require("./managers/managers.module");
+const locations_module_1 = require("./locations/locations.module");
+const regions_module_1 = require("./regions/regions.module");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -22,7 +26,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             config_1.ConfigModule.forRoot(),
-            typeorm_1.TypeOrmModule.forRoot(({
+            typeorm_1.TypeOrmModule.forRoot({
                 type: 'postgres',
                 host: process.env.host,
                 port: +process.env.port,
@@ -32,7 +36,7 @@ exports.AppModule = AppModule = __decorate([
                 entities: [],
                 autoLoadEntities: true,
                 synchronize: true,
-            })), employees_module_1.EmployeesModule, products_module_1.ProductsModule, providers_module_1.ProvidersModule
+            }), employees_module_1.EmployeesModule, products_module_1.ProductsModule, providers_module_1.ProvidersModule, managers_module_1.ManagersModule, locations_module_1.LocationsModule, regions_module_1.RegionsModule, auth_module_1.AuthModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

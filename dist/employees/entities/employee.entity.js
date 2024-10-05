@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Employee = void 0;
+const location_entity_1 = require("../../locations/entities/location.entity");
 const typeorm_1 = require("typeorm");
 let Employee = class Employee {
 };
@@ -41,6 +42,13 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Employee.prototype, "photoUrl", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => location_entity_1.Location, (location) => location.employee),
+    (0, typeorm_1.JoinColumn)({
+        name: "locationid"
+    }),
+    __metadata("design:type", location_entity_1.Location)
+], Employee.prototype, "location", void 0);
 exports.Employee = Employee = __decorate([
     (0, typeorm_1.Entity)()
 ], Employee);
