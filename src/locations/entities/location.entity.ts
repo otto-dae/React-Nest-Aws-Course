@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { Employee } from "src/employees/entities/employee.entity";
 import { Manager } from "src/managers/entities/manager.entity";
 import { Region } from "src/regions/entities/region.entity";
@@ -7,14 +8,33 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGene
 export class Location {
     @PrimaryGeneratedColumn('increment')
     locationId: number;
+
+    @ApiProperty({
+        default: "OCSO juriquilla"
+    })
     @Column('text')
     locationName: string;
+
+    @ApiProperty({
+        default: "Avenida chocomilk, 12, 76226"
+    })
     @Column('text')
-    locationAdress: string;
+    locationAddress: string;
+
+
+    @ApiProperty({
+        default: "OCSO juriquilla"
+    })
+
+    @ApiProperty({
+        default: [12, 12]
+    })
     @Column('simple-array')
     locationLatLng: number[];
 
-    @OneToOne(() => Manager)
+    @OneToOne(() => Manager, {
+        eager: true
+    })
     @JoinColumn({
         name: "managerId"
     })

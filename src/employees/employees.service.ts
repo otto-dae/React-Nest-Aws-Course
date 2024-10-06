@@ -31,6 +31,14 @@ constructor(
    return employee;
   }
 
+  findByLocation( id: number){
+    return this.employeeRepository.findBy({
+      location: {
+        locationId: id
+      }
+    })
+  }
+
   async update(id: string, updateEmployeeDto: UpdateEmployeeDto) {
     const employeeToUpdate = await this.employeeRepository.preload({
       employeeId: id,

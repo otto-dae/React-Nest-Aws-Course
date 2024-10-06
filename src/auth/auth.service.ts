@@ -37,4 +37,15 @@ private jwtService: JwtService){}
     const token = this.jwtService.sign(payload);
     return token;
   }
+
+   async updateUser(userEmail: string, updateUserDto : UpdateUserDto){
+
+    const newUserData = await this.userRepository.preload({
+      userEmail,
+      ...updateUserDto
+    })
+
+    this.userRepository.save(newUserData);
+    return newUserData;
+   }
 }
