@@ -27,6 +27,8 @@ private jwtService: JwtService){}
         userEmail: loginUserDto.userEmail
       }
     })
+
+    if(!user) throw new UnauthorizedException("You are not authorized")
     const match =await bcrypt.compare(loginUserDto.userPassword, user.userPassword)
     if(!match) throw new UnauthorizedException("No authorized");
     const payload ={
