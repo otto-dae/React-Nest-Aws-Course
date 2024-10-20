@@ -22,7 +22,7 @@ export class Employee {
     })
     employeePhotoUrl: string;
 
-    @ManyToOne(() => Location, (location) => location.employee)
+    @ManyToOne(() => Location, (location) => location.employees)
     @JoinColumn({
         name:"locationid"
     })
