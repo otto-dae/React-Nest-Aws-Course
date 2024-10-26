@@ -26,6 +26,7 @@ export class ManagersService {
       }
     )
     if(!region) throw new NotFoundException(" womp womp");
+    return Manager;
   }
 
   async update(id: string, updateRegionDto: UpdateManagerDto) {
