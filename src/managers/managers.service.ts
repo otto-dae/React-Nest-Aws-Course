@@ -16,17 +16,20 @@ export class ManagersService {
   }
 
   findAll() {
-    return this.managerRepository.find();
+    return this.managerRepository.find({relations: {
+      location:true
+    }});
   }
 
   findOne(id: string) {
-    const region =  this.managerRepository.findBy(
-      {
-        managerId: id
-      }
+    const manager =  this.managerRepository.findOne({
+      where:{managerId: id},
+    relations:{
+      location: true
+    }}
     )
-    if(!region) throw new NotFoundException(" womp womp");
-    return Manager;
+    if(!manager) throw new NotFoundException(" womp womp");
+    return manager;
   }
 
   async update(id: string, updateRegionDto: UpdateManagerDto) {
