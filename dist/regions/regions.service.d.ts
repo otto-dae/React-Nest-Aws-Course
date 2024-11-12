@@ -7,7 +7,7 @@ export declare class RegionsService {
     constructor(regionRepository: Repository<Region>);
     create(createRegionDto: CreateRegionDto): Promise<CreateRegionDto & Region>;
     findAll(): Promise<Region[]>;
-    findOne(id: number): void;
+    findOne(id: number): Promise<Region>;
     update(id: number, updateRegionDto: UpdateRegionDto): Promise<Region>;
     remove(id: number): Promise<import("typeorm").DeleteResult>;
 }

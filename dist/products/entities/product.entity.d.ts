@@ -4,5 +4,5 @@ export declare class Product {
     productName: string;
     price: number;
     countSeal: number;
-    provider: Provider;
+    provider: Provider | string;
 }

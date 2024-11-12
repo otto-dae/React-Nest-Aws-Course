@@ -12,16 +12,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserDto = void 0;
 const class_validator_1 = require("class-validator");
 const user_entity_1 = require("../entities/user.entity");
+const swagger_1 = require("@nestjs/swagger");
 class CreateUserDto extends user_entity_1.User {
 }
 exports.CreateUserDto = CreateUserDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        default: "user@gmail.com"
+    }),
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "userEmail", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        default: "u987423jas"
+    }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(8),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "userPassword", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        default: "Employee"
+    }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsIn)(["Admin", "Employee", "Manager"]),
+    __metadata("design:type", Array)
+], CreateUserDto.prototype, "userRoles", void 0);
 //# sourceMappingURL=create-user.dto.js.map

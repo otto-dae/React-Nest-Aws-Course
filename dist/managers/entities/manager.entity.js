@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Manager = void 0;
+const user_entity_1 = require("../../auth/entities/user.entity");
 const location_entity_1 = require("../../locations/entities/location.entity");
 const typeorm_1 = require("typeorm");
 let Manager = class Manager {
@@ -28,7 +29,9 @@ __decorate([
     __metadata("design:type", Number)
 ], Manager.prototype, "managerFullSalary", void 0);
 __decorate([
-    (0, typeorm_1.Column)('text'),
+    (0, typeorm_1.Column)('text', {
+        unique: true
+    }),
     __metadata("design:type", String)
 ], Manager.prototype, "mangaerEmail", void 0);
 __decorate([
@@ -37,8 +40,18 @@ __decorate([
 ], Manager.prototype, "managerPhoneNumber", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => location_entity_1.Location),
-    __metadata("design:type", location_entity_1.Location)
+    (0, typeorm_1.JoinColumn)({
+        name: "locationId"
+    }),
+    __metadata("design:type", Object)
 ], Manager.prototype, "location", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => user_entity_1.User),
+    (0, typeorm_1.JoinColumn)({
+        name: "UserId"
+    }),
+    __metadata("design:type", user_entity_1.User)
+], Manager.prototype, "user", void 0);
 exports.Manager = Manager = __decorate([
     (0, typeorm_1.Entity)()
 ], Manager);

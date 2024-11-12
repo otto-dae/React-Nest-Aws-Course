@@ -1,4 +1,5 @@
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
@@ -9,4 +10,5 @@ export declare class AuthService {
     constructor(userRepository: Repository<User>, jwtService: JwtService);
     registerUser(createUserDto: CreateUserDto): Promise<CreateUserDto & User>;
     loginUser(loginUserDto: LoginUserDto): Promise<string>;
+    updateUser(userEmail: string, updateUserDto: UpdateUserDto): Promise<User>;
 }

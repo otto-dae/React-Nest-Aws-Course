@@ -34,6 +34,13 @@ let EmployeesService = class EmployeesService {
         });
         return employee;
     }
+    findByLocation(id) {
+        return this.employeeRepository.findBy({
+            location: {
+                locationId: id
+            }
+        });
+    }
     async update(id, updateEmployeeDto) {
         const employeeToUpdate = await this.employeeRepository.preload({
             employeeId: id,

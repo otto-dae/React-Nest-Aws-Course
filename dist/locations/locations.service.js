@@ -17,9 +17,11 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 const location_entity_1 = require("./entities/location.entity");
 const typeorm_2 = require("@nestjs/typeorm");
+const manager_entity_1 = require("../managers/entities/manager.entity");
 let LocationsService = class LocationsService {
-    constructor(locationRepository) {
+    constructor(locationRepository, managerRepository) {
         this.locationRepository = locationRepository;
+        this.managerRepository = managerRepository;
     }
     create(createLocationDto) {
         return this.locationRepository.save(createLocationDto);
@@ -36,11 +38,22 @@ let LocationsService = class LocationsService {
         return location;
     }
     async update(id, updateLocationDto) {
+        this.managerRepository.createQueryBuilder().update({
+            location: null
+        }).where("locationId = : id", {
+            id,
+        }).execute();
         const location = await this.locationRepository.preload({
             locationId: id,
             ...updateLocationDto
         });
-        return location;
+        const savedLocation = await this.locationRepository.save(location);
+        const managerUpdated = await this.managerRepository.preload({
+            managerId: updateLocationDto.manager,
+            location: location
+        });
+        this.managerRepository.save(managerUpdated);
+        return savedLocation;
     }
     remove(id) {
         return this.locationRepository.delete({
@@ -52,6 +65,8 @@ exports.LocationsService = LocationsService;
 exports.LocationsService = LocationsService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_2.InjectRepository)(location_entity_1.Location)),
-    __metadata("design:paramtypes", [typeorm_1.Repository])
+    __param(1, (0, typeorm_2.InjectRepository)(manager_entity_1.Manager)),
+    __metadata("design:paramtypes", [typeorm_1.Repository,
+        typeorm_1.Repository])
 ], LocationsService);
 //# sourceMappingURL=locations.service.js.map

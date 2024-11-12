@@ -16,7 +16,11 @@ exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
+const update_user_dto_1 = require("./dto/update-user.dto");
 const login_user_dto_1 = require("./dto/login-user.dto");
+const swagger_1 = require("@nestjs/swagger");
+const jwt_constants_1 = require("./constants/jwt.constants");
+const cookies_decorator_1 = require("./decorators/cookies.decorator");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -24,8 +28,17 @@ let AuthController = class AuthController {
     signup(createAuthDto) {
         return this.authService.registerUser(createAuthDto);
     }
-    signUser(loginUserDto) {
-        return this.authService.loginUser(loginUserDto);
+    async signUser(loginUserDto, response, cookies) {
+        const token = await this.authService.loginUser(loginUserDto);
+        response.cookie(jwt_constants_1.TOKEN_NAME, token, {
+            httpOnly: false,
+            secure: true,
+            maxAge: 1000 * 60 * 50 * 24 * 7,
+            sameSite: false
+        });
+    }
+    updateUser(userEmail, updateUserdto) {
+        return this.authService.updateUser(userEmail, updateUserdto);
     }
 };
 exports.AuthController = AuthController;
@@ -39,11 +52,22 @@ __decorate([
 __decorate([
     (0, common_1.Post)("login"),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)({ passthrough: true })),
+    __param(2, (0, cookies_decorator_1.Cookies)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [login_user_dto_1.LoginUserDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [login_user_dto_1.LoginUserDto, Object, Object]),
+    __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signUser", null);
+__decorate([
+    (0, common_1.Patch)("/:email"),
+    __param(0, (0, common_1.Param)('email')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, update_user_dto_1.UpdateUserDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "updateUser", null);
 exports.AuthController = AuthController = __decorate([
+    (0, swagger_1.ApiTags)('Auth'),
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);

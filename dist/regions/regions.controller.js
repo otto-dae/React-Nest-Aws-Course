@@ -17,6 +17,10 @@ const common_1 = require("@nestjs/common");
 const regions_service_1 = require("./regions.service");
 const create_region_dto_1 = require("./dto/create-region.dto");
 const update_region_dto_1 = require("./dto/update-region.dto");
+const auth_decorator_1 = require("../auth/decorators/auth.decorator");
+const roles_constants_1 = require("../auth/constants/roles.constants");
+const api_decorators_1 = require("../auth/decorators/api.decorators");
+const swagger_1 = require("@nestjs/swagger");
 let RegionsController = class RegionsController {
     constructor(regionsService) {
         this.regionsService = regionsService;
@@ -39,6 +43,7 @@ let RegionsController = class RegionsController {
 };
 exports.RegionsController = RegionsController;
 __decorate([
+    (0, auth_decorator_1.Auth)(),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -46,12 +51,14 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], RegionsController.prototype, "create", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.EMPLOYEE, roles_constants_1.ROLES.MANAGER),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], RegionsController.prototype, "findAll", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.EMPLOYEE, roles_constants_1.ROLES.MANAGER),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -59,6 +66,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], RegionsController.prototype, "findOne", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -67,6 +75,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], RegionsController.prototype, "update", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -74,6 +83,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], RegionsController.prototype, "remove", null);
 exports.RegionsController = RegionsController = __decorate([
+    (0, api_decorators_1.ApiAuth)(),
+    (0, swagger_1.ApiTags)('Regions'),
     (0, common_1.Controller)('regions'),
     __metadata("design:paramtypes", [regions_service_1.RegionsService])
 ], RegionsController);

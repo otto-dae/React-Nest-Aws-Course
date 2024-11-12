@@ -17,6 +17,10 @@ const common_1 = require("@nestjs/common");
 const locations_service_1 = require("./locations.service");
 const create_location_dto_1 = require("./dto/create-location.dto");
 const update_location_dto_1 = require("./dto/update-location.dto");
+const auth_decorator_1 = require("../auth/decorators/auth.decorator");
+const roles_constants_1 = require("../auth/constants/roles.constants");
+const api_decorators_1 = require("../auth/decorators/api.decorators");
+const swagger_1 = require("@nestjs/swagger");
 let LocationsController = class LocationsController {
     constructor(locationsService) {
         this.locationsService = locationsService;
@@ -39,6 +43,7 @@ let LocationsController = class LocationsController {
 };
 exports.LocationsController = LocationsController;
 __decorate([
+    (0, auth_decorator_1.Auth)(),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -46,12 +51,14 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], LocationsController.prototype, "create", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER, roles_constants_1.ROLES.EMPLOYEE),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], LocationsController.prototype, "findAll", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER, roles_constants_1.ROLES.EMPLOYEE),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -59,6 +66,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], LocationsController.prototype, "findOne", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -67,6 +75,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], LocationsController.prototype, "update", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -74,6 +83,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], LocationsController.prototype, "remove", null);
 exports.LocationsController = LocationsController = __decorate([
+    (0, api_decorators_1.ApiAuth)(),
+    (0, swagger_1.ApiTags)('locations'),
     (0, common_1.Controller)('locations'),
     __metadata("design:paramtypes", [locations_service_1.LocationsService])
 ], LocationsController);

@@ -4,9 +4,9 @@ import { Region } from "src/regions/entities/region.entity";
 export declare class Location {
     locationId: number;
     locationName: string;
-    locationAdress: string;
+    locationAddress: string;
     locationLatLng: number[];
-    manager: Manager;
+    manager: Manager | string;
     region: Region;
-    employee: Employee;
+    employees: Employee[];
 }

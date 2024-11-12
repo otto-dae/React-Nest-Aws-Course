@@ -11,27 +11,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateEmployeeDto = void 0;
 const class_validator_1 = require("class-validator");
-class CreateEmployeeDto {
+const employee_entity_1 = require("../entities/employee.entity");
+const location_entity_1 = require("../../locations/entities/location.entity");
+const swagger_1 = require("@nestjs/swagger");
+class CreateEmployeeDto extends employee_entity_1.Employee {
 }
 exports.CreateEmployeeDto = CreateEmployeeDto;
 __decorate([
+    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MaxLength)(30),
     __metadata("design:type", String)
-], CreateEmployeeDto.prototype, "name", void 0);
+], CreateEmployeeDto.prototype, "employeeName", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MaxLength)(70),
     __metadata("design:type", String)
-], CreateEmployeeDto.prototype, "lastName", void 0);
+], CreateEmployeeDto.prototype, "employeeLastName", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MaxLength)(10),
     __metadata("design:type", String)
-], CreateEmployeeDto.prototype, "phoneNumber", void 0);
+], CreateEmployeeDto.prototype, "employeePhoneNumber", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
-], CreateEmployeeDto.prototype, "email", void 0);
+], CreateEmployeeDto.prototype, "employeeEmail", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsObject)(),
+    __metadata("design:type", location_entity_1.Location)
+], CreateEmployeeDto.prototype, "location", void 0);
 //# sourceMappingURL=create-employee.dto.js.map

@@ -34,6 +34,8 @@ let AuthService = class AuthService {
                 userEmail: loginUserDto.userEmail
             }
         });
+        if (!user)
+            throw new common_1.UnauthorizedException("You are not authorized");
         const match = await bcrypt.compare(loginUserDto.userPassword, user.userPassword);
         if (!match)
             throw new common_1.UnauthorizedException("No authorized");
@@ -44,6 +46,14 @@ let AuthService = class AuthService {
         };
         const token = this.jwtService.sign(payload);
         return token;
+    }
+    async updateUser(userEmail, updateUserDto) {
+        const newUserData = await this.userRepository.preload({
+            userEmail,
+            ...updateUserDto
+        });
+        this.userRepository.save(newUserData);
+        return newUserData;
     }
 };
 exports.AuthService = AuthService;

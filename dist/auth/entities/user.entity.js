@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
+const employee_entity_1 = require("../../employees/entities/employee.entity");
 const manager_entity_1 = require("../../managers/entities/manager.entity");
 const typeorm_1 = require("typeorm");
 let User = class User {
@@ -20,7 +21,9 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "userId", void 0);
 __decorate([
-    (0, typeorm_1.Column)('text'),
+    (0, typeorm_1.Column)('text', {
+        unique: true
+    }),
     __metadata("design:type", String)
 ], User.prototype, "userEmail", void 0);
 __decorate([
@@ -37,6 +40,10 @@ __decorate([
     (0, typeorm_1.OneToOne)(() => manager_entity_1.Manager),
     __metadata("design:type", manager_entity_1.Manager)
 ], User.prototype, "manager", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => employee_entity_1.Employee),
+    __metadata("design:type", employee_entity_1.Employee)
+], User.prototype, "employee", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

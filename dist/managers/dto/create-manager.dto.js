@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateManagerDto = void 0;
 const class_validator_1 = require("class-validator");
 const manager_entity_1 = require("../entities/manager.entity");
+const location_entity_1 = require("../../locations/entities/location.entity");
 class CreateManagerDto extends manager_entity_1.Manager {
 }
 exports.CreateManagerDto = CreateManagerDto;
@@ -34,4 +35,9 @@ __decorate([
     (0, class_validator_1.MaxLength)(16),
     __metadata("design:type", String)
 ], CreateManagerDto.prototype, "managerPhoneNumber", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", location_entity_1.Location)
+], CreateManagerDto.prototype, "location", void 0);
 //# sourceMappingURL=create-manager.dto.js.map

@@ -5,5 +5,5 @@ export declare class CreateProductDto extends Product {
     productName: string;
     price: number;
     countSeal: number;
-    provider: Provider;
+    provider: Provider | string;
 }

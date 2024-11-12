@@ -17,6 +17,10 @@ const common_1 = require("@nestjs/common");
 const products_service_1 = require("./products.service");
 const create_product_dto_1 = require("./dto/create-product.dto");
 const update_product_dto_1 = require("./dto/update-product.dto");
+const roles_constants_1 = require("../auth/constants/roles.constants");
+const auth_decorator_1 = require("../auth/decorators/auth.decorator");
+const api_decorators_1 = require("../auth/decorators/api.decorators");
+const swagger_1 = require("@nestjs/swagger");
 let ProductsController = class ProductsController {
     constructor(productsService) {
         this.productsService = productsService;
@@ -42,6 +46,7 @@ let ProductsController = class ProductsController {
 };
 exports.ProductsController = ProductsController;
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.EMPLOYEE, roles_constants_1.ROLES.MANAGER),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -49,12 +54,14 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "create", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.EMPLOYEE, roles_constants_1.ROLES.MANAGER),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "findAll", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.EMPLOYEE, roles_constants_1.ROLES.MANAGER),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe({ version: "4" }))),
     __metadata("design:type", Function),
@@ -62,6 +69,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "findOne", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.EMPLOYEE, roles_constants_1.ROLES.MANAGER),
     (0, common_1.Get)('provider/:id'),
     __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe({ version: "4" }))),
     __metadata("design:type", Function),
@@ -69,6 +77,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "findByProvider", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.EMPLOYEE, roles_constants_1.ROLES.MANAGER),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe({ version: "4" }))),
     __param(1, (0, common_1.Body)()),
@@ -77,6 +86,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "update", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe({ version: "4" }))),
     __metadata("design:type", Function),
@@ -84,6 +94,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "remove", null);
 exports.ProductsController = ProductsController = __decorate([
+    (0, api_decorators_1.ApiAuth)(),
+    (0, swagger_1.ApiTags)('Products'),
     (0, common_1.Controller)('products'),
     __metadata("design:paramtypes", [products_service_1.ProductsService])
 ], ProductsController);

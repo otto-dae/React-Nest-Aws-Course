@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateLocationDto = void 0;
 const class_validator_1 = require("class-validator");
 const location_entity_1 = require("../entities/location.entity");
+const region_entity_1 = require("../../regions/entities/region.entity");
 class CreateLocationDto extends location_entity_1.Location {
 }
 exports.CreateLocationDto = CreateLocationDto;
@@ -24,10 +25,20 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MaxLength)(120),
     __metadata("design:type", String)
-], CreateLocationDto.prototype, "locationAdress", void 0);
+], CreateLocationDto.prototype, "locationAddress", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ArrayNotEmpty)(),
     __metadata("design:type", Array)
 ], CreateLocationDto.prototype, "locationLatLng", void 0);
+__decorate([
+    (0, class_validator_1.IsObject)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", region_entity_1.Region)
+], CreateLocationDto.prototype, "region", void 0);
+__decorate([
+    (0, class_validator_1.IsUUID)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateLocationDto.prototype, "manager", void 0);
 //# sourceMappingURL=create-location.dto.js.map

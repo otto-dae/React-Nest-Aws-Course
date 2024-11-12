@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Location = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const employee_entity_1 = require("../../employees/entities/employee.entity");
 const manager_entity_1 = require("../../managers/entities/manager.entity");
 const region_entity_1 = require("../../regions/entities/region.entity");
@@ -22,23 +23,38 @@ __decorate([
     __metadata("design:type", Number)
 ], Location.prototype, "locationId", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        default: "OCSO juriquilla"
+    }),
     (0, typeorm_1.Column)('text'),
     __metadata("design:type", String)
 ], Location.prototype, "locationName", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        default: "Avenida chocomilk, 12, 76226"
+    }),
     (0, typeorm_1.Column)('text'),
     __metadata("design:type", String)
-], Location.prototype, "locationAdress", void 0);
+], Location.prototype, "locationAddress", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        default: "OCSO juriquilla"
+    }),
+    (0, swagger_1.ApiProperty)({
+        default: [12, 12]
+    }),
     (0, typeorm_1.Column)('simple-array'),
     __metadata("design:type", Array)
 ], Location.prototype, "locationLatLng", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => manager_entity_1.Manager),
+    (0, swagger_1.ApiProperty)({ default: "a81bc81b-dead-4e5d-abff-90865d1e13b1" }),
+    (0, typeorm_1.OneToOne)(() => manager_entity_1.Manager, {
+        eager: true
+    }),
     (0, typeorm_1.JoinColumn)({
         name: "managerId"
     }),
-    __metadata("design:type", manager_entity_1.Manager)
+    __metadata("design:type", Object)
 ], Location.prototype, "manager", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => region_entity_1.Region, (region) => region.location),
@@ -49,8 +65,8 @@ __decorate([
 ], Location.prototype, "region", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => employee_entity_1.Employee, (employee) => employee.location),
-    __metadata("design:type", employee_entity_1.Employee)
-], Location.prototype, "employee", void 0);
+    __metadata("design:type", Array)
+], Location.prototype, "employees", void 0);
 exports.Location = Location = __decorate([
     (0, typeorm_1.Entity)()
 ], Location);

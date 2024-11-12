@@ -1,3 +1,4 @@
+import { User } from "src/auth/entities/user.entity";
 import { Location } from "src/locations/entities/location.entity";
 export declare class Manager {
     managerId: string;
@@ -5,5 +6,6 @@ export declare class Manager {
     managerFullSalary: number;
     mangaerEmail: string;
     managerPhoneNumber: string;
-    location: Location;
+    location: Location | string;
+    user: User;
 }

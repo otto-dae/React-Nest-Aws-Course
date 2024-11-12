@@ -18,6 +18,10 @@ const employees_service_1 = require("./employees.service");
 const create_employee_dto_1 = require("./dto/create-employee.dto");
 const update_employee_dto_1 = require("./dto/update-employee.dto");
 const platform_express_1 = require("@nestjs/platform-express");
+const roles_constants_1 = require("../auth/constants/roles.constants");
+const auth_decorator_1 = require("../auth/decorators/auth.decorator");
+const swagger_1 = require("@nestjs/swagger");
+const api_decorators_1 = require("../auth/decorators/api.decorators");
 let EmployeesController = class EmployeesController {
     constructor(employeesService) {
         this.employeesService = employeesService;
@@ -34,6 +38,9 @@ let EmployeesController = class EmployeesController {
     findOne(id) {
         return this.employeesService.findOne(id);
     }
+    findAllLocation(id) {
+        return this.employeesService.findByLocation(+id);
+    }
     update(id, updateEmployeeDto) {
         return this.employeesService.update(id, updateEmployeeDto);
     }
@@ -43,6 +50,7 @@ let EmployeesController = class EmployeesController {
 };
 exports.EmployeesController = EmployeesController;
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -50,6 +58,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EmployeesController.prototype, "create", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER, roles_constants_1.ROLES.EMPLOYEE),
     (0, common_1.Post)('upload'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
     __param(0, (0, common_1.UploadedFile)()),
@@ -58,12 +67,25 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EmployeesController.prototype, "uploadPhoto", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        example: {
+            employeeId: "UUID",
+            employeeName: "Otto",
+            employeeLastName: "De Acha",
+            employeeEmail: "otto@gmail.com",
+            employeePhoneNumber: "442XXXXXXX",
+            employeePhotoUrl: "url"
+        }
+    }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], EmployeesController.prototype, "findAll", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe({ version: "4" }))),
     __metadata("design:type", Function),
@@ -71,6 +93,14 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EmployeesController.prototype, "findOne", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], EmployeesController.prototype, "findAllLocation", null);
+__decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER, roles_constants_1.ROLES.EMPLOYEE),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe({ version: "4" }))),
     __param(1, (0, common_1.Body)()),
@@ -79,6 +109,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EmployeesController.prototype, "update", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe({ version: "4" }))),
     __metadata("design:type", Function),
@@ -86,6 +117,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EmployeesController.prototype, "remove", null);
 exports.EmployeesController = EmployeesController = __decorate([
+    (0, api_decorators_1.ApiAuth)(),
+    (0, swagger_1.ApiTags)('employees'),
     (0, common_1.Controller)('employees'),
     __metadata("design:paramtypes", [employees_service_1.EmployeesService])
 ], EmployeesController);

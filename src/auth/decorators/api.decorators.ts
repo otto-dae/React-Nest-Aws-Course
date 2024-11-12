@@ -14,7 +14,7 @@ export const ApiAuth = (() => {
           }),
           ApiResponse({
             status: 500,
-            description: "server erros"
+            description: "Server erros"
           }),
     )
    

@@ -9,8 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
 const employees_module_1 = require("./employees/employees.module");
 const products_module_1 = require("./products/products.module");
 const config_1 = require("@nestjs/config");
@@ -38,8 +36,6 @@ exports.AppModule = AppModule = __decorate([
                 synchronize: true,
             }), employees_module_1.EmployeesModule, products_module_1.ProductsModule, providers_module_1.ProvidersModule, managers_module_1.ManagersModule, locations_module_1.LocationsModule, regions_module_1.RegionsModule, auth_module_1.AuthModule
         ],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

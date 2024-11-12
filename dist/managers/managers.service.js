@@ -26,14 +26,20 @@ let ManagersService = class ManagersService {
         return this.managerRepository.save(createRegionDto);
     }
     findAll() {
-        return this.managerRepository.find();
+        return this.managerRepository.find({ relations: {
+                location: true
+            } });
     }
     findOne(id) {
-        const region = this.managerRepository.findBy({
-            managerId: id
+        const manager = this.managerRepository.findOne({
+            where: { managerId: id },
+            relations: {
+                location: true
+            }
         });
-        if (!region)
+        if (!manager)
             throw new common_1.NotFoundException(" womp womp");
+        return manager;
     }
     async update(id, updateRegionDto) {
         const regionToUpdate = await this.managerRepository.preload({

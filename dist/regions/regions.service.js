@@ -29,11 +29,12 @@ let RegionsService = class RegionsService {
         return this.regionRepository.find();
     }
     findOne(id) {
-        const region = this.regionRepository.findBy({
+        const region = this.regionRepository.findOneBy({
             regionId: id
         });
         if (!region)
             throw new common_1.NotFoundException(" womp womp");
+        return region;
     }
     async update(id, updateRegionDto) {
         const regionToUpdate = await this.regionRepository.preload({

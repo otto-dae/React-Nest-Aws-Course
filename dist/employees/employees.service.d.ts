@@ -8,6 +8,7 @@ export declare class EmployeesService {
     create(createEmployeeDto: CreateEmployeeDto): Promise<CreateEmployeeDto & Employee>;
     findAll(): Promise<Employee[]>;
     findOne(id: string): Promise<Employee>;
+    findByLocation(id: number): Promise<Employee[]>;
     update(id: string, updateEmployeeDto: UpdateEmployeeDto): Promise<Employee>;
     remove(id: string): {
         message: string;

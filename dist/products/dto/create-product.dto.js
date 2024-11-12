@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateProductDto = void 0;
 const class_validator_1 = require("class-validator");
 const product_entity_1 = require("../entities/product.entity");
-const provider_entity_1 = require("../../providers/entities/provider.entity");
 class CreateProductDto extends product_entity_1.Product {
 }
 exports.CreateProductDto = CreateProductDto;
@@ -37,8 +36,6 @@ __decorate([
 ], CreateProductDto.prototype, "countSeal", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsUUID)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", provider_entity_1.Provider)
+    __metadata("design:type", Object)
 ], CreateProductDto.prototype, "provider", void 0);
 //# sourceMappingURL=create-product.dto.js.map

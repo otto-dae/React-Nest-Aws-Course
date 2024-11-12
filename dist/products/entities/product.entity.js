@@ -36,7 +36,7 @@ __decorate([
     (0, typeorm_1.JoinColumn)({
         name: "providerId"
     }),
-    __metadata("design:type", provider_entity_1.Provider)
+    __metadata("design:type", Object)
 ], Product.prototype, "provider", void 0);
 exports.Product = Product = __decorate([
     (0, typeorm_1.Entity)()

@@ -17,10 +17,12 @@ const common_1 = require("@nestjs/common");
 const providers_service_1 = require("./providers.service");
 const create_provider_dto_1 = require("./dto/create-provider.dto");
 const update_provider_dto_1 = require("./dto/update-provider.dto");
-const auth_guard_1 = require("../auth/guards/auth.guard");
 const user_decorators_1 = require("../auth/decorators/user.decorators");
 const user_entity_1 = require("../auth/entities/user.entity");
 const auth_decorator_1 = require("../auth/decorators/auth.decorator");
+const roles_constants_1 = require("../auth/constants/roles.constants");
+const api_decorators_1 = require("../auth/decorators/api.decorators");
+const swagger_1 = require("@nestjs/swagger");
 let ProvidersController = class ProvidersController {
     constructor(providersService) {
         this.providersService = providersService;
@@ -51,6 +53,7 @@ let ProvidersController = class ProvidersController {
 };
 exports.ProvidersController = ProvidersController;
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -58,7 +61,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProvidersController.prototype, "create", null);
 __decorate([
-    (0, auth_decorator_1.Auth)("Admin"),
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.EMPLOYEE, roles_constants_1.ROLES.MANAGER),
     (0, common_1.Get)(),
     __param(0, (0, user_decorators_1.userData)()),
     __metadata("design:type", Function),
@@ -66,6 +69,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProvidersController.prototype, "findAll", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.EMPLOYEE, roles_constants_1.ROLES.MANAGER),
     (0, common_1.Get)('/name/:name'),
     __param(0, (0, common_1.Param)('name')),
     __metadata("design:type", Function),
@@ -73,6 +77,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProvidersController.prototype, "findByName", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.EMPLOYEE, roles_constants_1.ROLES.MANAGER),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -80,6 +85,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProvidersController.prototype, "findOne", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -88,6 +94,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProvidersController.prototype, "update", null);
 __decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -95,7 +102,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProvidersController.prototype, "remove", null);
 exports.ProvidersController = ProvidersController = __decorate([
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, api_decorators_1.ApiAuth)(),
+    (0, swagger_1.ApiTags)('Products'),
     (0, common_1.Controller)('providers'),
     __metadata("design:paramtypes", [providers_service_1.ProvidersService])
 ], ProvidersController);

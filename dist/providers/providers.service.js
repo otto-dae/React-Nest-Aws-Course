@@ -33,11 +33,18 @@ let ProvidersService = class ProvidersService {
         return provider;
     }
     findAll() {
-        return this.providerRepository.find();
+        return this.providerRepository.find({ relations: {
+                products: true
+            } });
     }
     findOne(id) {
-        return this.providerRepository.findOneBy({
-            providerId: id
+        return this.providerRepository.findOne({
+            where: {
+                providerId: id
+            },
+            relations: {
+                products: true
+            }
         });
     }
     async update(id, updateProviderDto) {

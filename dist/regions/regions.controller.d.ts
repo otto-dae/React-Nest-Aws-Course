@@ -6,7 +6,7 @@ export declare class RegionsController {
     constructor(regionsService: RegionsService);
     create(createRegionDto: CreateRegionDto): Promise<CreateRegionDto & import("./entities/region.entity").Region>;
     findAll(): Promise<import("./entities/region.entity").Region[]>;
-    findOne(id: string): void;
+    findOne(id: string): Promise<import("./entities/region.entity").Region>;
     update(id: string, updateRegionDto: UpdateRegionDto): Promise<import("./entities/region.entity").Region>;
     remove(id: string): Promise<import("typeorm").DeleteResult>;
 }

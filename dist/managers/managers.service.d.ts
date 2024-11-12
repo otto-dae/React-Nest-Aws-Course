@@ -7,7 +7,7 @@ export declare class ManagersService {
     constructor(managerRepository: Repository<Manager>);
     create(createRegionDto: CreateManagerDto): Promise<CreateManagerDto & Manager>;
     findAll(): Promise<Manager[]>;
-    findOne(id: string): void;
+    findOne(id: string): Promise<Manager>;
     update(id: string, updateRegionDto: UpdateManagerDto): Promise<Manager>;
     remove(id: string): Promise<import("typeorm").DeleteResult>;
 }

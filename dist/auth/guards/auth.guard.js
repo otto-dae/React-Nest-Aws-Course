@@ -19,8 +19,11 @@ let AuthGuard = class AuthGuard {
     }
     async canActivate(context) {
         const request = context.switchToHttp().getRequest();
-        const token = this.extractTokenFromHeader(request);
+        let token = this.extractTokenFromHeader(request);
         if (!token) {
+            token = request.cookies?.[jwt_constants_1.TOKEN_NAME];
+            if (!token)
+                throw new common_1.UnauthorizedException("You are not authorized");
             throw new common_1.UnauthorizedException();
         }
         try {

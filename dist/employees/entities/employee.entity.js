@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Employee = void 0;
+const user_entity_1 = require("../../auth/entities/user.entity");
 const location_entity_1 = require("../../locations/entities/location.entity");
 const typeorm_1 = require("typeorm");
 let Employee = class Employee {
@@ -22,33 +23,42 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)("text"),
     __metadata("design:type", String)
-], Employee.prototype, "name", void 0);
+], Employee.prototype, "employeeName", void 0);
 __decorate([
     (0, typeorm_1.Column)("text"),
     __metadata("design:type", String)
-], Employee.prototype, "lastName", void 0);
+], Employee.prototype, "employeeLastName", void 0);
 __decorate([
     (0, typeorm_1.Column)("text"),
     __metadata("design:type", String)
-], Employee.prototype, "phoneNumber", void 0);
+], Employee.prototype, "employeePhoneNumber", void 0);
 __decorate([
-    (0, typeorm_1.Column)("text"),
+    (0, typeorm_1.Column)("text", {
+        unique: true
+    }),
     __metadata("design:type", String)
-], Employee.prototype, "email", void 0);
+], Employee.prototype, "employeeEmail", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'text',
         nullable: true
     }),
     __metadata("design:type", String)
-], Employee.prototype, "photoUrl", void 0);
+], Employee.prototype, "employeePhotoUrl", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => location_entity_1.Location, (location) => location.employee),
+    (0, typeorm_1.ManyToOne)(() => location_entity_1.Location, (location) => location.employees),
     (0, typeorm_1.JoinColumn)({
         name: "locationid"
     }),
     __metadata("design:type", location_entity_1.Location)
 ], Employee.prototype, "location", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => user_entity_1.User),
+    (0, typeorm_1.JoinColumn)({
+        name: "UserId"
+    }),
+    __metadata("design:type", user_entity_1.User)
+], Employee.prototype, "user", void 0);
 exports.Employee = Employee = __decorate([
     (0, typeorm_1.Entity)()
 ], Employee);
