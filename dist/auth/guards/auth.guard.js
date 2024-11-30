@@ -19,12 +19,11 @@ let AuthGuard = class AuthGuard {
     }
     async canActivate(context) {
         const request = context.switchToHttp().getRequest();
-        let token = this.extractTokenFromHeader(request);
+        let token = this.ExtractTokenFromHeader(request);
         if (!token) {
             token = request.cookies?.[jwt_constants_1.TOKEN_NAME];
             if (!token)
                 throw new common_1.UnauthorizedException("You are not authorized");
-            throw new common_1.UnauthorizedException();
         }
         try {
             const payload = await this.jwtService.verifyAsync(token, {
@@ -33,11 +32,11 @@ let AuthGuard = class AuthGuard {
             request['user'] = payload;
         }
         catch {
-            throw new common_1.UnauthorizedException();
+            throw new common_1.UnauthorizedException("You are not authorized");
         }
         return true;
     }
-    extractTokenFromHeader(request) {
+    ExtractTokenFromHeader(request) {
         const [type, token] = request.headers.authorization?.split(' ') ?? [];
         return type === 'Bearer' ? token : undefined;
     }

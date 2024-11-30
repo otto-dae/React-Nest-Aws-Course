@@ -6,9 +6,11 @@ export declare class ProvidersService {
     private providerRepository;
     constructor(providerRepository: Repository<Provider>);
     create(createProviderDto: CreateProviderDto): Promise<CreateProviderDto & Provider>;
-    findByName(name: string): Promise<Provider[]>;
     findAll(): Promise<Provider[]>;
     findOne(id: string): Promise<Provider>;
+    findByName(name: string): Promise<Provider[]>;
     update(id: string, updateProviderDto: UpdateProviderDto): Promise<Provider>;
-    remove(id: string): void;
+    remove(id: string): {
+        message: string;
+    };
 }

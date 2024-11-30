@@ -3,7 +3,7 @@ import { Location } from "src/locations/entities/location.entity";
 export declare class Manager {
     managerId: string;
     managerFullName: string;
-    managerFullSalary: number;
+    managerSalary: number;
     mangaerEmail: string;
     managerPhoneNumber: string;
     location: Location | string;

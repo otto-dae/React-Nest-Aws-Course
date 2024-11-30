@@ -10,7 +10,7 @@ export declare class ProductsService {
     findOne(id: string): Promise<Product>;
     findByProvider(id: string): Promise<Product[]>;
     update(id: string, updateProductDto: UpdateProductDto): Promise<Product>;
-    remove(id: string): Promise<{
+    remove(id: string): {
         message: string;
-    }>;
+    };
 }

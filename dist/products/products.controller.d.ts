@@ -9,7 +9,7 @@ export declare class ProductsController {
     findOne(id: string): Promise<import("./entities/product.entity").Product>;
     findByProvider(id: string): Promise<import("./entities/product.entity").Product[]>;
     update(id: string, updateProductDto: UpdateProductDto): Promise<import("./entities/product.entity").Product>;
-    remove(id: string): Promise<{
+    remove(id: string): {
         message: string;
-    }>;
+    };
 }

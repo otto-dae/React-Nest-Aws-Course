@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateEmployeeDto = void 0;
 const class_validator_1 = require("class-validator");
 const employee_entity_1 = require("../entities/employee.entity");
-const location_entity_1 = require("../../locations/entities/location.entity");
 const swagger_1 = require("@nestjs/swagger");
 class CreateEmployeeDto extends employee_entity_1.Employee {
 }
@@ -44,7 +43,12 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsObject)(),
-    __metadata("design:type", location_entity_1.Location)
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", Object)
 ], CreateEmployeeDto.prototype, "location", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateEmployeeDto.prototype, "emplyeePhoto", void 0);
 //# sourceMappingURL=create-employee.dto.js.map

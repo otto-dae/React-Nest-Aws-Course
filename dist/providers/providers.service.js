@@ -24,17 +24,9 @@ let ProvidersService = class ProvidersService {
     create(createProviderDto) {
         return this.providerRepository.save(createProviderDto);
     }
-    async findByName(name) {
-        const provider = await this.providerRepository.findBy({
-            providerName: (0, typeorm_2.Like)(`%${name}%`)
-        });
-        if (!provider)
-            throw new common_1.NotFoundException();
-        return provider;
-    }
     findAll() {
         return this.providerRepository.find({ relations: {
-                products: true
+                products: true,
             } });
     }
     findOne(id) {
@@ -43,9 +35,17 @@ let ProvidersService = class ProvidersService {
                 providerId: id
             },
             relations: {
-                products: true
+                products: true,
             }
         });
+    }
+    async findByName(name) {
+        const provider = await this.providerRepository.findBy({
+            providerName: (0, typeorm_2.Like)(`%${name}%`)
+        });
+        if (!provider)
+            throw new common_1.NotFoundException();
+        return provider;
     }
     async update(id, updateProviderDto) {
         const product = await this.providerRepository.preload({
@@ -56,8 +56,11 @@ let ProvidersService = class ProvidersService {
     }
     remove(id) {
         this.providerRepository.delete({
-            providerId: id,
+            providerId: id
         });
+        return {
+            message: "Provider deleted"
+        };
     }
 };
 exports.ProvidersService = ProvidersService;

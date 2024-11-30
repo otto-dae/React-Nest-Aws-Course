@@ -17,7 +17,7 @@ class LoginUserDto {
 exports.LoginUserDto = LoginUserDto;
 __decorate([
     (0, swagger_1.ApiProperty)({
-        default: "otto@gmai.com"
+        default: "UserExample@gmail.com"
     }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsEmail)(),
@@ -25,7 +25,7 @@ __decorate([
 ], LoginUserDto.prototype, "userEmail", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        default: "pasjd32308eru"
+        default: "312312fs12"
     }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(8),

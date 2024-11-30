@@ -27,7 +27,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)('float'),
     __metadata("design:type", Number)
-], Manager.prototype, "managerFullSalary", void 0);
+], Manager.prototype, "managerSalary", void 0);
 __decorate([
     (0, typeorm_1.Column)('text', {
         unique: true

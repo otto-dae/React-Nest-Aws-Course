@@ -8,6 +8,6 @@ export declare class ManagersService {
     create(createRegionDto: CreateManagerDto): Promise<CreateManagerDto & Manager>;
     findAll(): Promise<Manager[]>;
     findOne(id: string): Promise<Manager>;
-    update(id: string, updateRegionDto: UpdateManagerDto): Promise<Manager>;
+    update(id: string, updateManagerDto: UpdateManagerDto): Promise<Manager>;
     remove(id: string): Promise<import("typeorm").DeleteResult>;
 }

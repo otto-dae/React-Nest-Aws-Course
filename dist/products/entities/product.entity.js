@@ -20,19 +20,19 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "productId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "text" }),
+    (0, typeorm_1.Column)({ type: 'text' }),
     __metadata("design:type", String)
 ], Product.prototype, "productName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "float" }),
+    (0, typeorm_1.Column)({ type: 'float' }),
     __metadata("design:type", Number)
 ], Product.prototype, "price", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "int" }),
+    (0, typeorm_1.Column)({ type: 'int' }),
     __metadata("design:type", Number)
 ], Product.prototype, "countSeal", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => provider_entity_1.Provider, (provider) => provider.products, {}),
+    (0, typeorm_1.ManyToOne)(() => provider_entity_1.Provider, (provider) => provider.products),
     (0, typeorm_1.JoinColumn)({
         name: "providerId"
     }),

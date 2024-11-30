@@ -5,5 +5,6 @@ export declare class CreateEmployeeDto extends Employee {
     employeeLastName: string;
     employeePhoneNumber: string;
     employeeEmail: string;
-    location: Location;
+    location: Location | string;
+    emplyeePhoto: string;
 }

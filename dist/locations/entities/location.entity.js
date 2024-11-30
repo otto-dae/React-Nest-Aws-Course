@@ -47,7 +47,7 @@ __decorate([
     __metadata("design:type", Array)
 ], Location.prototype, "locationLatLng", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ default: "a81bc81b-dead-4e5d-abff-90865d1e13b1" }),
+    (0, swagger_1.ApiProperty)({ default: "1b1434ad-5e6c-4ee3-806d-74406d65c714" }),
     (0, typeorm_1.OneToOne)(() => manager_entity_1.Manager, {
         eager: true
     }),

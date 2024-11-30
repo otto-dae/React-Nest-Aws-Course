@@ -6,21 +6,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ManagersModule = void 0;
+exports.AwsModule = void 0;
 const common_1 = require("@nestjs/common");
-const managers_service_1 = require("./managers.service");
-const managers_controller_1 = require("./managers.controller");
-const typeorm_1 = require("@nestjs/typeorm");
-const manager_entity_1 = require("./entities/manager.entity");
-let ManagersModule = class ManagersModule {
+const aws_service_1 = require("./aws.service");
+let AwsModule = class AwsModule {
 };
-exports.ManagersModule = ManagersModule;
-exports.ManagersModule = ManagersModule = __decorate([
+exports.AwsModule = AwsModule;
+exports.AwsModule = AwsModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([manager_entity_1.Manager])],
-        controllers: [managers_controller_1.ManagersController],
-        providers: [managers_service_1.ManagersService],
-        exports: [ManagersModule]
+        providers: [aws_service_1.AwsService],
+        exports: [aws_service_1.AwsService],
     })
-], ManagersModule);
-//# sourceMappingURL=managers.module.js.map
+], AwsModule);
+//# sourceMappingURL=aws.module.js.map

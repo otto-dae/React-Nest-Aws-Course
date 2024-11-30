@@ -40,6 +40,11 @@ export class AuthService {
     return this.employeeRepository.save(employee)
   }
 
+  registerUser(createUserDto: CreateUserDto) {
+    createUserDto.userPassword = bcrypt.hashSync(createUserDto.userPassword, 5);
+    return this.userRepository.save(createUserDto);
+  }
+
   async registerManager(id: string, createUserDto: CreateUserDto) {
     const roles = createUserDto.userRoles
     
@@ -47,8 +52,7 @@ export class AuthService {
       throw new BadRequestException("Invalid")
     }
 
-    createUserDto.userPassword = bcrypt.hashSync(createUserDto.userPassword, 5)
-    ;
+    createUserDto.userPassword = bcrypt.hashSync(createUserDto.userPassword, 5);
     const user = await this.userRepository.save(createUserDto);
 
     const manager = await this.managerRepository.preload({
@@ -60,26 +64,22 @@ export class AuthService {
   }
 
   async loginUser(loginUserDto: LoginUserDto) {
-
     const user = await this.userRepository.findOne({
       where: {
         userEmail: loginUserDto.userEmail,
       },
     });
-
     if (!user) throw new UnauthorizedException("No estas autorizado")
     const match = await bcrypt.compare(
       loginUserDto.userPassword,
       user.userPassword,
     );
-
     if (!match) throw new UnauthorizedException("No estas autorizado");
     const payload = {
       userEmail: user.userEmail,
       userPassword: user.userPassword,
       userRoles: user.userRoles
     };
-
     const token = this.jwtService.sign(payload);
     return token;
   }

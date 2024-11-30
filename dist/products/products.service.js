@@ -62,13 +62,13 @@ let ProductsService = class ProductsService {
         this.productRepository.save(producToUpdate);
         return producToUpdate;
     }
-    async remove(id) {
+    remove(id) {
         this.findOne(id);
         this.productRepository.delete({
             productId: id,
         });
         return {
-            message: `objeto con ${id} eliminado`
+            message: `Object with ${id} deleted`
         };
     }
 };

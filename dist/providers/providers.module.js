@@ -12,20 +12,12 @@ const providers_service_1 = require("./providers.service");
 const providers_controller_1 = require("./providers.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const provider_entity_1 = require("./entities/provider.entity");
-const jwt_1 = require("@nestjs/jwt");
-const jwt_constants_1 = require("../auth/constants/jwt.constants");
 let ProvidersModule = class ProvidersModule {
 };
 exports.ProvidersModule = ProvidersModule;
 exports.ProvidersModule = ProvidersModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([provider_entity_1.Provider]),
-            jwt_1.JwtModule.register({
-                secret: jwt_constants_1.JWT_KEY,
-                signOptions: {
-                    expiresIn: jwt_constants_1.EXPIRES_IN,
-                }
-            })],
+        imports: [typeorm_1.TypeOrmModule.forFeature([provider_entity_1.Provider])],
         controllers: [providers_controller_1.ProvidersController],
         providers: [providers_service_1.ProvidersService],
     })

@@ -10,5 +10,7 @@ export declare class ProvidersController {
     findByName(name: string): Promise<import("./entities/provider.entity").Provider[]>;
     findOne(id: string): Promise<import("./entities/provider.entity").Provider>;
     update(id: string, updateProviderDto: UpdateProviderDto): Promise<import("./entities/provider.entity").Provider>;
-    remove(id: string): void;
+    remove(id: string): {
+        message: string;
+    };
 }

@@ -17,23 +17,23 @@ let Employee = class Employee {
 };
 exports.Employee = Employee;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
 ], Employee.prototype, "employeeId", void 0);
 __decorate([
-    (0, typeorm_1.Column)("text"),
+    (0, typeorm_1.Column)('text'),
     __metadata("design:type", String)
 ], Employee.prototype, "employeeName", void 0);
 __decorate([
-    (0, typeorm_1.Column)("text"),
+    (0, typeorm_1.Column)('text'),
     __metadata("design:type", String)
 ], Employee.prototype, "employeeLastName", void 0);
 __decorate([
-    (0, typeorm_1.Column)("text"),
+    (0, typeorm_1.Column)('text'),
     __metadata("design:type", String)
 ], Employee.prototype, "employeePhoneNumber", void 0);
 __decorate([
-    (0, typeorm_1.Column)("text", {
+    (0, typeorm_1.Column)('text', {
         unique: true
     }),
     __metadata("design:type", String)
@@ -44,18 +44,18 @@ __decorate([
         nullable: true
     }),
     __metadata("design:type", String)
-], Employee.prototype, "employeePhotoUrl", void 0);
+], Employee.prototype, "employeePhoto", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => location_entity_1.Location, (location) => location.employees),
     (0, typeorm_1.JoinColumn)({
-        name: "locationid"
+        name: "locationId"
     }),
-    __metadata("design:type", location_entity_1.Location)
+    __metadata("design:type", Object)
 ], Employee.prototype, "location", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => user_entity_1.User),
     (0, typeorm_1.JoinColumn)({
-        name: "UserId"
+        name: "userId"
     }),
     __metadata("design:type", user_entity_1.User)
 ], Employee.prototype, "user", void 0);

@@ -29,8 +29,8 @@ let LocationsService = class LocationsService {
     findAll() {
         return this.locationRepository.find();
     }
-    findOne(id) {
-        const location = this.locationRepository.findOneBy({
+    async findOne(id) {
+        const location = await this.locationRepository.findOneBy({
             locationId: id,
         });
         if (!location)
@@ -38,11 +38,7 @@ let LocationsService = class LocationsService {
         return location;
     }
     async update(id, updateLocationDto) {
-        this.managerRepository.createQueryBuilder().update({
-            location: null
-        }).where("locationId = : id", {
-            id,
-        }).execute();
+        this.managerRepository.createQueryBuilder().update().set({ location: null }).where("locationId = :id", { id, }).execute();
         const location = await this.locationRepository.preload({
             locationId: id,
             ...updateLocationDto

@@ -14,7 +14,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RegionsService = void 0;
 const common_1 = require("@nestjs/common");
-const update_region_dto_1 = require("./dto/update-region.dto");
 const typeorm_1 = require("@nestjs/typeorm");
 const region_entity_1 = require("./entities/region.entity");
 const typeorm_2 = require("typeorm");
@@ -30,25 +29,24 @@ let RegionsService = class RegionsService {
     }
     findOne(id) {
         const region = this.regionRepository.findOneBy({
-            regionId: id
+            regionId: id,
         });
         if (!region)
-            throw new common_1.NotFoundException(" womp womp");
+            throw new common_1.NotFoundException("Region not found");
         return region;
     }
     async update(id, updateRegionDto) {
         const regionToUpdate = await this.regionRepository.preload({
             regionId: id,
-            ...updateRegionDto
+            ...updateRegionDto,
         });
         if (!regionToUpdate)
-            throw new common_1.NotFoundException("Region to update no found");
+            throw new common_1.BadRequestException();
         return this.regionRepository.save(regionToUpdate);
     }
     remove(id) {
         return this.regionRepository.delete({
             regionId: id,
-            ...update_region_dto_1.UpdateRegionDto
         });
     }
 };

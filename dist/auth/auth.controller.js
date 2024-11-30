@@ -25,23 +25,45 @@ let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
-    signup(createAuthDto) {
-        return this.authService.registerUser(createAuthDto);
+    registerManager(role, createUserDto, id) {
+        if (role === "manager") {
+            return this.authService.registerManager(id, createUserDto);
+        }
+        else if (role === "employee") {
+            return this.authService.registerEmployee(id, createUserDto);
+        }
+        throw new common_1.BadRequestException("Rol inválido");
     }
-    async signUser(loginUserDto, response, cookies) {
+    signup(createUserDto) {
+        return this.authService.registerUser(createUserDto);
+    }
+    async login(loginUserDto, response, cookies) {
         const token = await this.authService.loginUser(loginUserDto);
+        let expireDate = new Date();
+        expireDate.setDate(expireDate.getDay() + 7);
         response.cookie(jwt_constants_1.TOKEN_NAME, token, {
-            httpOnly: false,
+            httpOnly: true,
             secure: true,
-            maxAge: 1000 * 60 * 50 * 24 * 7,
-            sameSite: false
+            sameSite: 'none',
+            expires: expireDate,
+            maxAge: 1000 * 60 * 60 * 24 * 7,
         });
+        return;
     }
-    updateUser(userEmail, updateUserdto) {
-        return this.authService.updateUser(userEmail, updateUserdto);
+    updateUser(userEmail, updateUserDto) {
+        return this.authService.updateUser(userEmail, updateUserDto);
     }
 };
 exports.AuthController = AuthController;
+__decorate([
+    (0, common_1.Post)("register/:id"),
+    __param(0, (0, common_1.Query)("role")),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Param)("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, create_user_dto_1.CreateUserDto, String]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "registerManager", null);
 __decorate([
     (0, common_1.Post)("signup"),
     __param(0, (0, common_1.Body)()),
@@ -57,18 +79,18 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [login_user_dto_1.LoginUserDto, Object, Object]),
     __metadata("design:returntype", Promise)
-], AuthController.prototype, "signUser", null);
+], AuthController.prototype, "login", null);
 __decorate([
-    (0, common_1.Patch)("/:email"),
-    __param(0, (0, common_1.Param)('email')),
+    (0, common_1.Patch)("/:id"),
+    __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_user_dto_1.UpdateUserDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "updateUser", null);
 exports.AuthController = AuthController = __decorate([
-    (0, swagger_1.ApiTags)('Auth'),
-    (0, common_1.Controller)('auth'),
+    (0, swagger_1.ApiTags)("Auth"),
+    (0, common_1.Controller)("auth"),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);
 //# sourceMappingURL=auth.controller.js.map

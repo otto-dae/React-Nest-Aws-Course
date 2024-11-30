@@ -14,23 +14,35 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmployeesController = void 0;
 const common_1 = require("@nestjs/common");
+const platform_express_1 = require("@nestjs/platform-express");
 const employees_service_1 = require("./employees.service");
 const create_employee_dto_1 = require("./dto/create-employee.dto");
 const update_employee_dto_1 = require("./dto/update-employee.dto");
-const platform_express_1 = require("@nestjs/platform-express");
-const roles_constants_1 = require("../auth/constants/roles.constants");
 const auth_decorator_1 = require("../auth/decorators/auth.decorator");
+const roles_constants_1 = require("../auth/constants/roles.constants");
 const swagger_1 = require("@nestjs/swagger");
+const aws_service_1 = require("../aws/aws.service");
 const api_decorators_1 = require("../auth/decorators/api.decorators");
 let EmployeesController = class EmployeesController {
-    constructor(employeesService) {
+    constructor(employeesService, awsService) {
         this.employeesService = employeesService;
+        this.awsService = awsService;
     }
-    create(createEmployeeDto) {
-        return this.employeesService.create(createEmployeeDto);
+    async create(createEmployeeDto, file) {
+        if (!file) {
+            return this.employeesService.create(createEmployeeDto);
+        }
+        else {
+            const photoUrl = await this.awsService.uploadFile(file);
+            createEmployeeDto.employeePhoto = photoUrl;
+            return this.employeesService.create(createEmployeeDto);
+        }
     }
-    uploadPhoto(file) {
-        return 'ok';
+    async uploadPhoto(id, file) {
+        const response = await this.awsService.uploadFile(file);
+        return this.employeesService.update(id, {
+            emplyeePhoto: response,
+        });
     }
     findAll() {
         return this.employeesService.findAll();
@@ -41,8 +53,15 @@ let EmployeesController = class EmployeesController {
     findAllLocation(id) {
         return this.employeesService.findByLocation(+id);
     }
-    update(id, updateEmployeeDto) {
-        return this.employeesService.update(id, updateEmployeeDto);
+    async update(id, updateEmployeeDto, file) {
+        if (file.originalname == "undefined") {
+            return this.employeesService.update(id, updateEmployeeDto);
+        }
+        else {
+            const fileUrl = await this.awsService.uploadFile(file);
+            updateEmployeeDto.employeePhoto = fileUrl;
+            return this.employeesService.update(id, updateEmployeeDto);
+        }
     }
     remove(id) {
         return this.employeesService.remove(id);
@@ -51,34 +70,36 @@ let EmployeesController = class EmployeesController {
 exports.EmployeesController = EmployeesController;
 __decorate([
     (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_employee_dto_1.CreateEmployeeDto]),
-    __metadata("design:returntype", void 0)
-], EmployeesController.prototype, "create", null);
-__decorate([
-    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER, roles_constants_1.ROLES.EMPLOYEE),
-    (0, common_1.Post)('upload'),
-    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
-    __param(0, (0, common_1.UploadedFile)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], EmployeesController.prototype, "uploadPhoto", null);
-__decorate([
-    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
     (0, swagger_1.ApiResponse)({
         status: 201,
         example: {
             employeeId: "UUID",
             employeeName: "Otto",
+            employeeEmail: "Otto@gmail.com",
             employeeLastName: "De Acha",
-            employeeEmail: "otto@gmail.com",
-            employeePhoneNumber: "442XXXXXXX",
-            employeePhotoUrl: "url"
-        }
+            employeePhoneNumber: "4421112233",
+        },
     }),
+    (0, common_1.Post)(),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("employeePhoto")),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.UploadedFile)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_employee_dto_1.CreateEmployeeDto, Object]),
+    __metadata("design:returntype", Promise)
+], EmployeesController.prototype, "create", null);
+__decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER, roles_constants_1.ROLES.EMPLOYEE),
+    (0, common_1.Post)(":id/upload"),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("file")),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.UploadedFile)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], EmployeesController.prototype, "uploadPhoto", null);
+__decorate([
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -86,40 +107,44 @@ __decorate([
 ], EmployeesController.prototype, "findAll", null);
 __decorate([
     (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe({ version: "4" }))),
+    (0, common_1.Get)("/:id"),
+    __param(0, (0, common_1.Param)("id", new common_1.ParseUUIDPipe({ version: "4" }))),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], EmployeesController.prototype, "findOne", null);
 __decorate([
     (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)("/location/:id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], EmployeesController.prototype, "findAllLocation", null);
 __decorate([
-    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER, roles_constants_1.ROLES.EMPLOYEE),
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe({ version: "4" }))),
+    (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.EMPLOYEE),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("employeePhoto")),
+    (0, common_1.Patch)("/:id"),
+    __param(0, (0, common_1.Param)("id", new common_1.ParseUUIDPipe({ version: "4" }))),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_employee_dto_1.UpdateEmployeeDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [String, update_employee_dto_1.UpdateEmployeeDto, Object]),
+    __metadata("design:returntype", Promise)
 ], EmployeesController.prototype, "update", null);
 __decorate([
     (0, auth_decorator_1.Auth)(roles_constants_1.ROLES.MANAGER),
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe({ version: "4" }))),
+    (0, common_1.Delete)("/:id"),
+    __param(0, (0, common_1.Param)("id", new common_1.ParseUUIDPipe({ version: "4" }))),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], EmployeesController.prototype, "remove", null);
 exports.EmployeesController = EmployeesController = __decorate([
     (0, api_decorators_1.ApiAuth)(),
-    (0, swagger_1.ApiTags)('employees'),
-    (0, common_1.Controller)('employees'),
-    __metadata("design:paramtypes", [employees_service_1.EmployeesService])
+    (0, swagger_1.ApiTags)("Employees"),
+    (0, common_1.Controller)("employees"),
+    __metadata("design:paramtypes", [employees_service_1.EmployeesService,
+        aws_service_1.AwsService])
 ], EmployeesController);
 //# sourceMappingURL=employees.controller.js.map

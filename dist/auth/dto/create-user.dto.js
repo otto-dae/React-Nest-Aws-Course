@@ -25,7 +25,7 @@ __decorate([
 ], CreateUserDto.prototype, "userEmail", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        default: "u987423jas"
+        default: "23213fe4231"
     }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(8),

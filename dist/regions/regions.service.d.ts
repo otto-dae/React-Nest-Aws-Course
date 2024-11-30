@@ -1,7 +1,7 @@
-import { CreateRegionDto } from './dto/create-region.dto';
-import { UpdateRegionDto } from './dto/update-region.dto';
-import { Region } from './entities/region.entity';
-import { Repository } from 'typeorm';
+import { CreateRegionDto } from "./dto/create-region.dto";
+import { UpdateRegionDto } from "./dto/update-region.dto";
+import { Region } from "./entities/region.entity";
+import { Repository } from "typeorm";
 export declare class RegionsService {
     private regionRepository;
     constructor(regionRepository: Repository<Region>);

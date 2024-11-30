@@ -8,14 +8,14 @@ const cookieParser = require("cookie-parser");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, {
         cors: {
-            origin: "https://" + process.env.allowedOrigin,
-            credentials: true
+            origin: process.env.allowedOrigin,
+            credentials: true,
         }
     });
     app.use(cookieParser());
     const config = new swagger_1.DocumentBuilder()
-        .setTitle('Ocso API')
-        .setDescription('API for Oxxo')
+        .setTitle('OXXO API')
+        .setDescription('Api for OXXO')
         .setVersion('0.8')
         .addBearerAuth()
         .build();

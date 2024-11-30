@@ -6,7 +6,7 @@ export declare class Employee {
     employeeLastName: string;
     employeePhoneNumber: string;
     employeeEmail: string;
-    employeePhotoUrl: string;
-    location: Location;
+    employeePhoto: string;
+    location: Location | string;
     user: User;
 }
