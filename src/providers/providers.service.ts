@@ -3,54 +3,59 @@ import { CreateProviderDto } from './dto/create-provider.dto';
 import { UpdateProviderDto } from './dto/update-provider.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Provider } from './entities/provider.entity';
-import { Like, Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 
 @Injectable()
 export class ProvidersService {
-    constructor(
-      @InjectRepository(Provider)
-      private providerRepository: Repository<Provider>
-    ){}
-  create(createProviderDto: CreateProviderDto) {
-    return this.providerRepository.save(createProviderDto);
-  }
+  constructor(
 
-  async findByName(name: string){
-    const provider = await this.providerRepository.findBy({
-      providerName: Like(`%${name}%`)
-    })
-    if(!provider) throw new NotFoundException();
-    return provider;
+    @InjectRepository(Provider)
+    private providerRepository: Repository<Provider>
+  ){}
+
+  create(createProviderDto: CreateProviderDto) {
+    return this.providerRepository.save(createProviderDto)
   }
 
   findAll() {
     return this.providerRepository.find({relations: {
-      products: true
-    }});
+      products: true,
+    }})
   }
 
   findOne(id: string) {
     return this.providerRepository.findOne({
-      where:{
-        providerId:id
+      where : {
+        providerId: id
       },
-      relations:{
-        products:true
-      }
-    });
+      relations: {
+        products: true,
+      }})
   }
 
-  async update(id: string , updateProviderDto: UpdateProviderDto) {
+  async findByName(name: string){
+    const provider = await this.providerRepository.findBy({
+     providerName: Like(`%${name}%`)
+    })
+
+    if (!provider) throw new NotFoundException()
+    return provider;
+  }
+
+  async update(id: string, updateProviderDto: UpdateProviderDto) {
     const product = await this.providerRepository.preload({
       providerId: id,
-      ... updateProviderDto
+      ...updateProviderDto
     })
     return this.providerRepository.save(product);
   }
 
   remove(id: string) {
     this.providerRepository.delete({
-      providerId: id,
+      providerId: id
     })
+    return {
+      message: "Provider deleted"
+    }
   }
 }

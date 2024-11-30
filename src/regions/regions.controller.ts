@@ -32,7 +32,6 @@ export class RegionsController {
   }
 
   @Auth()
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateRegionDto: UpdateRegionDto) {
     return this.regionsService.update(+id, updateRegionDto);

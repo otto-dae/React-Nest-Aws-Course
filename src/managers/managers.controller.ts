@@ -10,6 +10,7 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiAuth()
 @ApiTags('Manager')
 @Controller('managers')
+
 export class ManagersController {
   constructor(private readonly managersService: ManagersService) {}
 

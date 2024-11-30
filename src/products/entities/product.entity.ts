@@ -5,15 +5,13 @@ import { Entity, Column, PrimaryGeneratedColumn, IsNull, ManyToOne, JoinColumn} 
 export class Product {
     @PrimaryGeneratedColumn("uuid")
     productId: string;
-    @Column({type: "text"})
+    @Column({type:'text'})
     productName: string;
-    @Column({type: "float"})
+    @Column({type: 'float'})
     price: number;
-    @Column({type: "int"})
+    @Column({type: 'int'})
     countSeal: number;
-    @ManyToOne(() => Provider, (provider) => provider.products, {
-        //eager: true,
-    })
+    @ManyToOne(() => Provider, (provider) => provider.products)
     @JoinColumn({
         name:"providerId"
     }) 

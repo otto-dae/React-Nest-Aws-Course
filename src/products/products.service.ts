@@ -1,11 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { v4 as uuid } from 'uuid';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
-import { Provider } from 'src/providers/entities/provider.entity';
 
 
 @Injectable()
@@ -47,10 +45,8 @@ export class ProductsService {
     return this.productRepository.findBy(
       {
         provider: {
-          providerId: id,
-        }
-      }
-    )
+        providerId: id,
+      }})
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {
@@ -63,13 +59,13 @@ export class ProductsService {
     return producToUpdate;
   }
 
-  async remove(id: string) {
-    this.findOne(id);
-    this.productRepository.delete({
-      productId: id,
-    })
-    return {
-      message: `objeto con ${id} eliminado`
+  remove(id: string) {
+  this.findOne(id);
+  this.productRepository.delete({
+    productId: id,
+  })
+   return {
+      message: `Object with ${id} deleted`
     }
   }
 }

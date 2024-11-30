@@ -9,7 +9,7 @@ export class Manager {
     @Column('text')
     managerFullName: string;
     @Column('float')
-    managerFullSalary: number;
+    managerSalary: number;
     @Column('text', {
         unique: true
     })

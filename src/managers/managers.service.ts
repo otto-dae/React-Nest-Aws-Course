@@ -7,40 +7,41 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class ManagersService {
+  
   constructor(
     @InjectRepository(Manager)
-    private managerRepository: Repository<Manager>
-  ){}
+    private managerRepository: Repository<Manager>){}
+
   create(createRegionDto: CreateManagerDto) {
     return this.managerRepository.save(createRegionDto);
   }
 
   findAll() {
-    return this.managerRepository.find({relations: {
+    return this.managerRepository.find({
+      relations: {
       location:true
     }});
   }
 
   findOne(id: string) {
-    const manager =  this.managerRepository.findOne({
-      where:{managerId: id},
+    const manager = this.managerRepository.findOne({
+    where:{managerId: id},
     relations:{
-      location: true
-    }}
-    )
-    if(!manager) throw new NotFoundException(" womp womp");
+      location: true,
+      user: true
+    }})
+
+    if(!manager) throw new NotFoundException("No manager found");
     return manager;
   }
 
-  async update(id: string, updateRegionDto: UpdateManagerDto) {
-    const regionToUpdate = await this.managerRepository.preload({
+  async update(id: string, updateManagerDto: UpdateManagerDto) {
+    const managerToUpdate = await this.managerRepository.preload({
       managerId: id,
-      ... updateRegionDto
+        ...updateManagerDto
     })
-    if(!regionToUpdate) throw new NotFoundException("Region to update no found")
-      return this.managerRepository.save(regionToUpdate)
+    return this.managerRepository.save(managerToUpdate)
   }
-
 
   remove(id: string) {
     return this.managerRepository.delete(
@@ -51,4 +52,3 @@ export class ManagersService {
     )
   }
 }
-

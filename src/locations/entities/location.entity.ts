@@ -32,9 +32,9 @@ export class Location {
     @Column('simple-array')
     locationLatLng: number[];
 
-    @ApiProperty({default: "a81bc81b-dead-4e5d-abff-90865d1e13b1"})
+    @ApiProperty({default: "1b1434ad-5e6c-4ee3-806d-74406d65c714"}) //Idk maybe con el del video sirve, needs revision
     @OneToOne(() => Manager, {
-        eager: true
+        eager: true //ptm true or false
     })
     @JoinColumn({
         name: "managerId"

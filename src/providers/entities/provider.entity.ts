@@ -12,7 +12,8 @@ export class Provider {
         unique: true
     })
     providerEmail: string;
-    @Column("text",{
+    @Column({
+        type: "text",
         nullable: true,
     })
     providerPhoneNumber: string;

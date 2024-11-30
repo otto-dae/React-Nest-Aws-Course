@@ -9,8 +9,8 @@ import { ApiTags } from '@nestjs/swagger';
 
 @ApiAuth()
 @ApiTags('locations')
-
 @Controller('locations')
+
 export class LocationsController {
   constructor(private readonly locationsService: LocationsService) {}
 
@@ -40,7 +40,7 @@ export class LocationsController {
 
   @Auth()
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.locationsService.remove(+id);
+  remove(@Param('id') id: string) {    
+      return this.locationsService.remove(+id);
   }
 }
