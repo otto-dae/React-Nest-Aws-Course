@@ -13,7 +13,7 @@ export class Manager {
     @Column('text', {
         unique: true
     })
-    mangaerEmail: string;
+    managerEmail: string;
     @Column('text')
     managerPhoneNumber: string;
 

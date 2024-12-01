@@ -25,11 +25,11 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
-], CreateManagerDto.prototype, "mangaerEmail", void 0);
+], CreateManagerDto.prototype, "managerEmail", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
-], CreateManagerDto.prototype, "managerFullSalary", void 0);
+], CreateManagerDto.prototype, "managerSalary", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MaxLength)(16),

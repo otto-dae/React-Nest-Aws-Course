@@ -33,7 +33,7 @@ __decorate([
         unique: true
     }),
     __metadata("design:type", String)
-], Manager.prototype, "mangaerEmail", void 0);
+], Manager.prototype, "managerEmail", void 0);
 __decorate([
     (0, typeorm_1.Column)('text'),
     __metadata("design:type", String)

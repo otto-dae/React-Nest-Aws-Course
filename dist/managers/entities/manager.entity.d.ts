@@ -4,7 +4,7 @@ export declare class Manager {
     managerId: string;
     managerFullName: string;
     managerSalary: number;
-    mangaerEmail: string;
+    managerEmail: string;
     managerPhoneNumber: string;
     location: Location | string;
     user: User;
